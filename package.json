@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "@bahmutov/cy-grep": "^1.9.17",
+    "cypress": "^13.10.0"
+  }
+}
