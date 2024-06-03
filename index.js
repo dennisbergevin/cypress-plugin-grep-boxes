@@ -181,7 +181,6 @@ const addGrepButtons = () => {
     runnablesStyleEl.innerHTML = defaultStyles;
     runnablesEl?.appendChild(runnablesStyleEl);
   }
-  const i = 0;
   const testsAndSuites = window.top?.document.querySelectorAll(
     '.test.runnable, .suite.runnable'
   );
