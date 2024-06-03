@@ -1,6 +1,28 @@
 {
+  "name": "cypress-plugin-grep-boxes",
+  "version": "1.0.0",
+  "description": "Cypress plugin that allows user to run specific tests in open mode.",
+  "main": "./index.js",
+  "keywords": [
+    "cypress",
+    "testing",
+    "cypress-plugin"
+  ],
   "devDependencies": {
     "@bahmutov/cy-grep": "^1.9.17",
     "cypress": "^13.10.0"
-  }
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "author": "Dennis Bergevin",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dennisbergevin/cypress-plugin-grep-boxes.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dennisbergevin/cypress-plugin-grep-boxes/issues"
+  },
+  "homepage": "https://github.com/dennisbergevin/cypress-plugin-grep-boxes#readme"
 }
