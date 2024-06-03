@@ -15,7 +15,7 @@ A companion Cypress plugin for <code>cy-grep</code> that allows user to run spec
 #### Table of Contents
 
 - [Installation](#-installation)
-- [Setup]()
+- [Setup](#-setup)
 - [Open mode](#-open-mode)
 - [Contributions](#contributions)
 
