@@ -101,7 +101,7 @@ describe('example to-do app', () => {
       cy.get('.todo-list li')
         .should('have.length', 1)
         .first()
-        .should('have.text', 'Walk the do');
+        .should('have.text', 'Walk the dog');
 
       // For good measure, let's also assert that the task we checked off
       // does not exist on the page.
