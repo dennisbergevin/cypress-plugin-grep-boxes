@@ -134,6 +134,21 @@ const greppedTestToggle = () => {
       const tests = [
         ...window.top?.document.querySelectorAll('.grep-test-checkbox:checked'),
       ].map((e) => e.value);
+      const uncheckedTests = [
+        ...window.top?.document.querySelectorAll(
+          '.grep-test-checkbox:not(:checked)'
+        ),
+      ].map((e) => e.value);
+
+      // if a non-checked test's title includes a checked test's title, invert grep for unchecked title
+      tests.forEach((t) => {
+        uncheckedTests.forEach((u) => {
+          if (u.includes(t)) {
+            tests.push(`-${u}`);
+          }
+        });
+      });
+
       Cypress.grep(tests.join(';'));
 
       // when checked, grep only selected tests in spec
