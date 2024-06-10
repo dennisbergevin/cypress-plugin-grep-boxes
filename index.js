@@ -134,14 +134,23 @@ const greppedTestToggle = () => {
       const tests = [
         ...window.top?.document.querySelectorAll('.grep-test-checkbox:checked'),
       ].map((e) => e.value);
+      // store all non-checked checkbox values
       const uncheckedTests = [
         ...window.top?.document.querySelectorAll(
           '.grep-test-checkbox:not(:checked)'
         ),
       ].map((e) => e.value);
 
-      // if a non-checked test's title includes a checked test's title, invert grep for unchecked title
       tests.forEach((t) => {
+        // if a checked test title begins with the grep inverted '-' symbol, remove the '-'
+        if (t[0] === '-') {
+          tests.push(t.slice(1));
+          tests.splice(
+            tests.findIndex((e) => e === t),
+            1
+          );
+        }
+        // if a non-checked test's title includes a checked test's title, invert grep for unchecked title
         uncheckedTests.forEach((u) => {
           if (u.includes(t)) {
             tests.push(`-${u}`);
