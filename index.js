@@ -1,3 +1,5 @@
+const registerCypressGrep = require('@bahmutov/cy-grep');
+
 /**
  * Adds a toggle to reporter to grep selected tests.
  */
@@ -5,6 +7,8 @@
 const tests = [];
 
 const greppedTestToggle = () => {
+  registerCypressGrep();
+
   const hasStyles = window.top?.document.querySelector('#grepTestToggleStyle');
   const hasToggleButton = window.top?.document.querySelector('#grepTestToggle');
   const defaultStyles = `
@@ -180,7 +184,7 @@ const greppedTestToggle = () => {
   if (
     window.top?.document.URL !=
       grepTestToggleControlsElement.getAttribute('data-url') &&
-    window.top?.document.querySelector('#grepTestToggle').checked
+    grepTestToggleElement.checked
   ) {
     grepTestToggleElement.click();
   }
