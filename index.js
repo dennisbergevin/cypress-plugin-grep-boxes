@@ -1,14 +1,12 @@
-const registerCypressGrep = require('@bahmutov/cy-grep');
-
+import registerCypressGrep from '@bahmutov/cy-grep';
 /**
  * Adds a toggle to reporter to grep selected tests.
  */
 
 const tests = [];
 
-const greppedTestToggle = () => {
+export const greppedTestToggle = () => {
   registerCypressGrep();
-
   const hasStyles = window.top?.document.querySelector('#grepTestToggleStyle');
   const hasToggleButton = window.top?.document.querySelector('#grepTestToggle');
   const defaultStyles = `
@@ -194,7 +192,7 @@ const greppedTestToggle = () => {
  * Adds a checkbox for each suite and test for run selection.
  */
 
-const addGrepButtons = () => {
+export const addGrepButtons = () => {
   const hasStyles = window.top?.document.querySelector('#grepButtonsStyle');
 
   const grepTestsBtnClass = 'grep-tests-btn';
@@ -310,5 +308,3 @@ if (
     addGrepButtons();
   });
 }
-
-module.exports = { greppedTestToggle, addGrepButtons };
