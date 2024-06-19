@@ -116,9 +116,6 @@ export const greppedTestToggle = () => {
     headerToggleButton?.appendChild(headerToggleLabel);
   }
 
-  const grepTestToggleControlsElement = window.top?.document.querySelector(
-    '#grepTestToggleControls'
-  );
   const grepTestToggleElement =
     window.top?.document.querySelector('#grepTestToggle');
   const grepTestToggleLabelElement = window.top?.document.querySelector(
@@ -178,14 +175,6 @@ export const greppedTestToggle = () => {
       grepTestToggleTooltipElement.innerHTML = turnOffgrepTestToggleDescription;
     }
   });
-  // Reset filter if a user switches specs in Cypress test runner UI while toggle is checked
-  if (
-    window.top?.document.URL !=
-      grepTestToggleControlsElement.getAttribute('data-url') &&
-    grepTestToggleElement.checked
-  ) {
-    grepTestToggleElement.click();
-  }
 };
 
 /**
@@ -277,16 +266,28 @@ export const addGrepButtons = () => {
   });
 };
 
-Cypress.on('test:before:run', () => {
+Cypress.on('window:unload', () => {
+  // Window:unload Cypress event only works for E2E, not component
   // Store the current Cypress test runner url
   // This is to check against any spec change in test runner while the grep filter is activated
   // If a user does switch spec while filter is active, the filter will be reset
-  // See greppedTestToggle logic for more context
-  const controls = window.top?.document.querySelector(
-    '#grepTestToggleControls'
+  const sidebarSpecLinkPage = window.top?.document.querySelector(
+    '[data-cy="sidebar-link-specs-page"]'
   );
-  controls.setAttribute('data-url', window.top?.document.URL);
+  const grepTestToggleElement =
+    window.top?.document.querySelector('#grepTestToggle');
 
+  if (
+    window.top?.document.URL != sidebarSpecLinkPage.getAttribute('data-url') &&
+    grepTestToggleElement.checked
+  ) {
+    grepTestToggleElement.click();
+  }
+
+  sidebarSpecLinkPage.setAttribute('data-url', window.top?.document.URL);
+});
+
+Cypress.on('test:before:run', () => {
   if (
     // if the grep test toggle is checked, do not show checkboxes on each runnable
     window.top?.document.querySelectorAll('#grepTestToggle:checked').length ===
