@@ -16,7 +16,7 @@
 // Import commands.js using ES2015 syntax:
 import './commands';
 import { greppedTestToggle, addGrepButtons } from '../../index';
-import registerCypressGrep from '@bahmutov/cy-grep';
+import registerCypressGrep from '@bahmutov/cy-grep/src/support';
 
 registerCypressGrep();
 greppedTestToggle();
