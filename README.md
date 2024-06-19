@@ -34,8 +34,8 @@ npm install --save-dev cypress-plugin-grep-boxes
 
 ```js
 import { greppedTestToggle, addGrepButtons } from 'cypress-plugin-grep-boxes';
+import registerCypressGrep from '@bahmutov/cy-grep';
 
-const registerCypressGrep = require('@bahmutov/cy-grep');
 registerCypressGrep();
 
 greppedTestToggle();
