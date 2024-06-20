@@ -266,26 +266,31 @@ export const addGrepButtons = () => {
   });
 };
 
-Cypress.on('window:unload', () => {
-  // Window:unload Cypress event only works for E2E, not component
-  // Store the current Cypress test runner url
-  // This is to check against any spec change in test runner while the grep filter is activated
-  // If a user does switch spec while filter is active, the filter will be reset
-  const sidebarSpecLinkPage = window.top?.document.querySelector(
-    '[data-cy="sidebar-link-specs-page"]'
-  );
-  const grepTestToggleElement =
-    window.top?.document.querySelector('#grepTestToggle');
+// Wrapping logic within isInteractive check
+// This targets cypress open mode where user can switch specs
+if (Cypress.config('isInteractive')) {
+  Cypress.on('window:unload', () => {
+    // Window:unload Cypress event only works for E2E, not component
+    // Store the current Cypress test runner url
+    // This is to check against any spec change in test runner while the grep filter is activated
+    // If a user does switch spec while filter is active, the filter will be reset
+    const sidebarSpecLinkPage = window.top?.document.querySelector(
+      '[data-cy="sidebar-link-specs-page"]'
+    );
+    const grepTestToggleElement =
+      window.top?.document.querySelector('#grepTestToggle');
 
-  if (
-    window.top?.document.URL != sidebarSpecLinkPage.getAttribute('data-url') &&
-    grepTestToggleElement.checked
-  ) {
-    grepTestToggleElement.click();
-  }
+    if (
+      window.top?.document.URL !=
+        sidebarSpecLinkPage.getAttribute('data-url') &&
+      grepTestToggleElement.checked
+    ) {
+      grepTestToggleElement.click();
+    }
 
-  sidebarSpecLinkPage.setAttribute('data-url', window.top?.document.URL);
-});
+    sidebarSpecLinkPage.setAttribute('data-url', window.top?.document.URL);
+  });
+}
 
 Cypress.on('test:before:run', () => {
   if (
