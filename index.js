@@ -270,7 +270,6 @@ export const addGrepButtons = () => {
 // This targets cypress open mode where user can switch specs
 if (Cypress.config('isInteractive')) {
   Cypress.on('window:unload', () => {
-    // Window:unload Cypress event only works for E2E, not component
     // Store the current Cypress test runner url
     // This is to check against any spec change in test runner while the grep filter is activated
     // If a user does switch spec while filter is active, the filter will be reset
