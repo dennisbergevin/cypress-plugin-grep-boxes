@@ -17,6 +17,7 @@ A companion Cypress plugin for <code>cy-grep</code> that allows user to run spec
 - [Installation](#-installation)
 - [Setup](#-setup)
 - [Open mode](#-open-mode)
+  - [Use Required Test Tags Instead Of Skipping Tests](#use-required-test-tags-instead-of-skipping-tests)
 - [Contributions](#contributions)
 
 ---
@@ -65,6 +66,29 @@ addGrepButtons();
 Within each spec, you can select any given number of suite(s) or individual test(s) and click the filter toggle located on the reporter above:
 
 ![Cypress grep-boxes within UI mode](./assets/grep-boxes-ui.png)
+
+### Use Required Test Tags Instead Of Skipping Tests
+
+> [!NOTE]
+> Read more about this topic within a blog post [Use Required Test Tags Instead Of Skipping Tests](https://glebbahmutov.com/blog/required-tags-instead-of-skipped-tests/) and within the [README for `@bahmutov/cy-grep`](https://github.com/bahmutov/cy-grep#required-tags).
+
+Normally, any Cypress test or suite of tests marked with a `.skip` will be shown when running tests or within the Cypress test runner UI.
+
+Since this plugin uses `@bahmutov/cy-grep` plugin, we can instead designate skipped tests using a **required tag**:
+
+```js
+it('deletes an item', { requiredTags: '@skip' }, () => {
+  expect(1).to.equal(2);
+});
+```
+
+Now running or opening Cypress in interactive mode, **you will not see any tests with `requiredTags` including `@skip`** (unless setting environment variable `grepTags=@skip`).
+
+To run just those tests with the required tag `@skip` in interactive mode:
+
+```bash
+npx cypress open --env grepTags=@skip
+```
 
 ## Contributions
 
