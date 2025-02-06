@@ -309,6 +309,9 @@ if (
   window.top?.document.addEventListener('click', () => {
     addGrepButtons();
   });
+  window.top?.document.addEventListener('dblclick', () => {
+    addGrepButtons();
+  });
   window.top?.document.addEventListener('keypress', () => {
     addGrepButtons();
   });
