@@ -1,4 +1,4 @@
-import registerCypressGrep from "@bahmutov/cy-grep";
+import registerCypressGrep from '@bahmutov/cy-grep';
 /**
  * Adds a toggle to reporter to grep selected tests.
  */
@@ -7,8 +7,8 @@ const tests = [];
 
 export const greppedTestToggle = () => {
   registerCypressGrep();
-  const hasStyles = window.top?.document.querySelector("#grepTestToggleStyle");
-  const hasToggleButton = window.top?.document.querySelector("#grepTestToggle");
+  const hasStyles = window.top?.document.querySelector('#grepTestToggleStyle');
+  const hasToggleButton = window.top?.document.querySelector('#grepTestToggle');
   const defaultStyles = `
         .reporter header {
           overflow: visible;
@@ -68,45 +68,45 @@ export const greppedTestToggle = () => {
   <path d="M1.5 14.5A1.5 1.5 0 0 1 0 13V6a1.5 1.5 0 0 1 1.5-1.5h13A1.5 1.5 0 0 1 16 6v7a1.5 1.5 0 0 1-1.5 1.5zm13-1a.5.5 0 0 0 .5-.5V6a.5.5 0 0 0-.5-.5h-13A.5.5 0 0 0 1 6v7a.5.5 0 0 0 .5.5z"/>
 </svg>`;
 
-  const turnOffgrepTestToggleDescription = "Filter selected tests";
-  const turnOngrepTestToggleDescription = "Unfilter selected tests";
+  const turnOffgrepTestToggleDescription = 'Filter selected tests';
+  const turnOngrepTestToggleDescription = 'Unfilter selected tests';
 
   // append styles
   if (!hasStyles) {
-    const reporterEl = window.top?.document.querySelector("#unified-reporter");
-    const reporterStyleEl = document.createElement("style");
-    reporterStyleEl.setAttribute("id", "grepTestToggleStyle");
+    const reporterEl = window.top?.document.querySelector('#unified-reporter');
+    const reporterStyleEl = document.createElement('style');
+    reporterStyleEl.setAttribute('id', 'grepTestToggleStyle');
     reporterStyleEl.innerHTML = defaultStyles;
     reporterEl?.appendChild(reporterStyleEl);
   }
 
   if (!hasToggleButton) {
     const header = window.top?.document.querySelector(
-      "#unified-reporter header",
+      '#unified-reporter header'
     );
-    const headerToggleDiv = document.createElement("div");
-    const headerToggleSpan = document.createElement("span");
-    const headerToggleTooltip = document.createElement("span");
-    const headerToggleButton = document.createElement("button");
-    const headerToggleInput = document.createElement("input");
-    const headerToggleLabel = document.createElement("label");
+    const headerToggleDiv = document.createElement('div');
+    const headerToggleSpan = document.createElement('span');
+    const headerToggleTooltip = document.createElement('span');
+    const headerToggleButton = document.createElement('button');
+    const headerToggleInput = document.createElement('input');
+    const headerToggleLabel = document.createElement('label');
 
-    headerToggleInput.setAttribute("type", "checkbox");
+    headerToggleInput.setAttribute('type', 'checkbox');
 
-    headerToggleInput.setAttribute("id", "grepTestToggle");
-    headerToggleLabel.setAttribute("for", "grepTestToggle");
-    headerToggleLabel.setAttribute("id", "grepTestToggleLabel");
+    headerToggleInput.setAttribute('id', 'grepTestToggle');
+    headerToggleLabel.setAttribute('for', 'grepTestToggle');
+    headerToggleLabel.setAttribute('id', 'grepTestToggleLabel');
     headerToggleLabel.innerHTML = turnOffgrepTestToggleIcon;
 
-    headerToggleDiv.setAttribute("class", "controls");
-    headerToggleDiv.setAttribute("id", "grepTestToggleControls");
-    headerToggleTooltip.setAttribute("id", "grepTestToggleTooltip");
+    headerToggleDiv.setAttribute('class', 'controls');
+    headerToggleDiv.setAttribute('id', 'grepTestToggleControls');
+    headerToggleTooltip.setAttribute('id', 'grepTestToggleTooltip');
     headerToggleTooltip.innerText = turnOffgrepTestToggleDescription;
     headerToggleButton.setAttribute(
-      "aria-label",
-      turnOffgrepTestToggleDescription,
+      'aria-label',
+      turnOffgrepTestToggleDescription
     );
-    headerToggleButton.setAttribute("id", "grepTestToggleButton");
+    headerToggleButton.setAttribute('id', 'grepTestToggleButton');
 
     header?.appendChild(headerToggleDiv);
     headerToggleDiv?.appendChild(headerToggleSpan);
@@ -117,16 +117,16 @@ export const greppedTestToggle = () => {
   }
 
   const grepTestToggleElement =
-    window.top?.document.querySelector("#grepTestToggle");
+    window.top?.document.querySelector('#grepTestToggle');
   const grepTestToggleLabelElement = window.top?.document.querySelector(
-    "[for=grepTestToggle]",
+    '[for=grepTestToggle]'
   );
   const grepTestToggleTooltipElement = window.top?.document.querySelector(
-    "#grepTestToggleTooltip",
+    '#grepTestToggleTooltip'
   );
 
-  grepTestToggleElement?.addEventListener("change", (e) => {
-    const stopBtn = window.top?.document.querySelector(".reporter .stop");
+  grepTestToggleElement?.addEventListener('change', (e) => {
+    const stopBtn = window.top?.document.querySelector('.reporter .stop');
 
     if (e.target.checked) {
       if (stopBtn) {
@@ -134,22 +134,22 @@ export const greppedTestToggle = () => {
       }
       // store all checked checkbox values then send to grep in accepted format
       const tests = [
-        ...window.top?.document.querySelectorAll(".grep-test-checkbox:checked"),
+        ...window.top?.document.querySelectorAll('.grep-test-checkbox:checked'),
       ].map((e) => e.value);
       // store all non-checked checkbox values
       const uncheckedTests = [
         ...window.top?.document.querySelectorAll(
-          ".grep-test-checkbox:not(:checked)",
+          '.grep-test-checkbox:not(:checked)'
         ),
       ].map((e) => e.value);
 
       tests.forEach((t) => {
         // if a checked test title begins with the grep inverted '-' symbol, remove the '-'
-        if (t[0] === "-") {
+        if (t[0] === '-') {
           tests.push(t.slice(1));
           tests.splice(
             tests.findIndex((e) => e === t),
-            1,
+            1
           );
         }
         // if a non-checked test's title includes a checked test's title, invert grep for unchecked title
@@ -160,7 +160,7 @@ export const greppedTestToggle = () => {
         });
       });
 
-      Cypress.grep(tests.join(";"));
+      Cypress.grep(tests.join(';'));
 
       // when checked, grep only selected tests in spec
       grepTestToggleLabelElement.innerHTML = turnOngrepTestToggleIcon;
@@ -182,9 +182,9 @@ export const greppedTestToggle = () => {
  */
 
 export const addGrepButtons = () => {
-  const hasStyles = window.top?.document.querySelector("#grepButtonsStyle");
+  const hasStyles = window.top?.document.querySelector('#grepButtonsStyle');
 
-  const grepTestsBtnClass = "grep-tests-btn";
+  const grepTestsBtnClass = 'grep-tests-btn';
 
   const defaultStyles = `
   .grep-tests-btn {
@@ -201,40 +201,40 @@ export const addGrepButtons = () => {
   `;
 
   if (!hasStyles) {
-    const runnablesEl = window.top?.document.querySelector(".runnables");
-    const runnablesStyleEl = window.top?.document.createElement("style");
-    runnablesStyleEl.setAttribute("id", "grepButtonsStyle");
+    const runnablesEl = window.top?.document.querySelector('.runnables');
+    const runnablesStyleEl = window.top?.document.createElement('style');
+    runnablesStyleEl.setAttribute('id', 'grepButtonsStyle');
     runnablesStyleEl.innerHTML = defaultStyles;
     runnablesEl?.appendChild(runnablesStyleEl);
   }
   const testsAndSuites = window.top?.document.querySelectorAll(
-    ".test.runnable, .suite.runnable",
+    '.test.runnable, .suite.runnable'
   );
   [...testsAndSuites].forEach((t) => {
-    const header = t.querySelector(".collapsible-header");
-    const title = header.querySelector(".runnable-title");
-    const testName = title.innerText.split("\n")[0];
+    const header = t.querySelector('.collapsible-header');
+    const title = header.querySelector('.runnable-title');
+    const testName = title.innerText.split('\n')[0];
 
     // Don't add the button if it already exists
     if (header.querySelectorAll(`.${grepTestsBtnClass}`).length) {
       return;
     }
 
-    const grepTestsBtn = window.top?.document.createElement("button");
+    const grepTestsBtn = window.top?.document.createElement('button');
     grepTestsBtn.className = grepTestsBtnClass;
-    grepTestsBtn.style.background = "none";
-    grepTestsBtn.style.color = "inherit";
-    grepTestsBtn.style.padding = "0 20px";
-    grepTestsBtn.style.verticalAlign = "baseline";
+    grepTestsBtn.style.background = 'none';
+    grepTestsBtn.style.color = 'inherit';
+    grepTestsBtn.style.padding = '0 20px';
+    grepTestsBtn.style.verticalAlign = 'baseline';
     grepTestsBtn.setAttribute(
-      "aria-label",
-      "Checkbox to select suite/test for filtering",
+      'aria-label',
+      'Checkbox to select suite/test for filtering'
     );
 
     // Add checkbox
-    const checkbox = window.top?.document.createElement("input");
-    checkbox.className = "grep-test-checkbox";
-    checkbox.type = "checkbox";
+    const checkbox = window.top?.document.createElement('input');
+    checkbox.className = 'grep-test-checkbox';
+    checkbox.type = 'checkbox';
     checkbox.value = testName;
     if (tests.includes(checkbox.value)) {
       checkbox.checked = true;
@@ -246,19 +246,19 @@ export const addGrepButtons = () => {
     // Push checked tests to an array for temporary storage
     // This is for when a suite collapses in UI and removes a given test runnable
     // When the collapsible expands, any previously checked test will remain checked
-    checkbox?.addEventListener("change", (e) => {
+    checkbox?.addEventListener('change', (e) => {
       if (e.target.checked) {
         tests.push(checkbox.value);
       } else {
         tests.splice(
           tests.findIndex((e) => e === checkbox.value),
-          1,
+          1
         );
       }
     });
 
     // To prevent a checkbox from expanding a runnable, click the collapsible
-    grepTestsBtn?.addEventListener("change", (e) => {
+    grepTestsBtn?.addEventListener('change', (e) => {
       if (e.target.checked) {
         header.click();
       }
@@ -268,33 +268,33 @@ export const addGrepButtons = () => {
 
 // Wrapping logic within isInteractive check
 // This targets cypress open mode where user can switch specs
-if (Cypress.config("isInteractive")) {
-  Cypress.on("window:unload", () => {
+if (Cypress.config('isInteractive')) {
+  Cypress.on('window:unload', () => {
     // Store the current Cypress test runner url
     // This is to check against any spec change in test runner while the grep filter is activated
     // If a user does switch spec while filter is active, the filter will be reset
     const sidebarSpecLinkPage = window.top?.document.querySelector(
-      '[data-cy="sidebar-link-specs-page"]',
+      '[data-cy="sidebar-link-specs-page"]'
     );
     const grepTestToggleElement =
-      window.top?.document.querySelector("#grepTestToggle");
+      window.top?.document.querySelector('#grepTestToggle');
 
     if (
       window.top?.document.URL !=
-        sidebarSpecLinkPage.getAttribute("data-url") &&
+        sidebarSpecLinkPage.getAttribute('data-url') &&
       grepTestToggleElement.checked
     ) {
       grepTestToggleElement.click();
     }
 
-    sidebarSpecLinkPage.setAttribute("data-url", window.top?.document.URL);
+    sidebarSpecLinkPage.setAttribute('data-url', window.top?.document.URL);
   });
 }
 
-Cypress.on("test:before:run", () => {
+Cypress.on('test:before:run', () => {
   if (
     // if the grep test toggle is checked, do not show checkboxes on each runnable
-    window.top?.document.querySelectorAll("#grepTestToggle:checked").length ===
+    window.top?.document.querySelectorAll('#grepTestToggle:checked').length ===
     0
   ) {
     addGrepButtons();
@@ -304,15 +304,15 @@ Cypress.on("test:before:run", () => {
 // To account for when the collapsible runnables are removed, add back grep buttons
 if (
   // if the grep test toggle is checked, do not show checkboxes on each runnable
-  window.top?.document.querySelectorAll("#grepTestToggle:checked").length === 0
+  window.top?.document.querySelectorAll('#grepTestToggle:checked').length === 0
 ) {
-  window.top?.document.addEventListener("click", () => {
+  window.top?.document.addEventListener('click', () => {
     addGrepButtons();
   });
-  window.top?.document.addEventListener("dblclick", () => {
+  window.top?.document.addEventListener('dblclick', () => {
     addGrepButtons();
   });
-  window.top?.document.addEventListener("keypress", () => {
+  window.top?.document.addEventListener('keypress', () => {
     addGrepButtons();
   });
 }
