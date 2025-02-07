@@ -306,13 +306,17 @@ if (
   // if the grep test toggle is checked, do not show checkboxes on each runnable
   window.top?.document.querySelectorAll('#grepTestToggle:checked').length === 0
 ) {
-  window.top?.document.addEventListener('click', () => {
+  // watching for changes to DOM structure
+  MutationObserver = window.MutationObserver;
+
+  var observer = new MutationObserver(function () {
+    // fired when a mutation occurs
     addGrepButtons();
   });
-  window.top?.document.addEventListener('dblclick', () => {
-    addGrepButtons();
-  });
-  window.top?.document.addEventListener('keypress', () => {
-    addGrepButtons();
+
+  // defining the window.top?.document to be observed by the observer
+  observer.observe(window.top?.document, {
+    subtree: true,
+    attributes: true,
   });
 }
