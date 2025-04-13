@@ -18,7 +18,7 @@ A companion Cypress plugin for <code>cy-grep</code> that allows user to run spec
 - [Setup](#-setup)
 - [Open mode](#-open-mode)
   - [Use Required Test Tags Instead Of Skipping Tests](#use-required-test-tags-instead-of-skipping-tests)
-- [Environment variable: `disableInitialAutoRun`]
+- [disableInitialAutoRun](#disableInitialAutoRun)
 - [Contributions](#contributions)
 
 ---
@@ -91,11 +91,11 @@ To run just those tests with the required tag `@skip` in interactive mode:
 npx cypress open --env grepTags=@skip
 ```
 
-## Environment variable: `disableInitialAutoRun`
+## disableInitialAutoRun
 
 Cypress Test Runner UI automatically runs available tests once a spec file is open.
 
-If you want to prevent this behavior because you would like more control of when to run chosen tests using this plugin, add the environment variable `disableInitialAutoRun=true`:
+To prevent this behavior to have control of when and which tests to run, add the environment variable `disableInitialAutoRun=true`:
 
 ![disableInitialAutoRun Demo](./assets/disableInitialAutoRun_demo.gif)
 
