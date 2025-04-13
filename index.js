@@ -291,6 +291,22 @@ if (Cypress.config('isInteractive')) {
   });
 }
 
+if (Cypress.config('isInteractive')) {
+  if (
+    // if the grep test toggle is not checked, do not run tests
+    Cypress.env('disableInitialAutoRun') &&
+    window.top?.document.querySelectorAll('#grepTestToggle:checked').length ===
+      0
+  ) {
+    const sidebarSpecLinkPage = window.top?.document.querySelector(
+      '[data-cy="sidebar-link-specs-page"]'
+    );
+
+    sidebarSpecLinkPage.setAttribute('data-url', window.top?.document.URL);
+    Cypress.runner.stop();
+  }
+}
+
 Cypress.on('test:before:run', () => {
   if (
     // if the grep test toggle is checked, do not show checkboxes on each runnable
