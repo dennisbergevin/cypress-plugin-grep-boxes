@@ -188,6 +188,7 @@ export const addGrepButtons = () => {
 
   const defaultStyles = `
   .grep-tests-btn {
+    pointer-events: auto;
     background: none;
     color: inherit;
     padding: 0 20px;
