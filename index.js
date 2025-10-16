@@ -180,7 +180,6 @@ export const greppedTestToggle = () => {
         });
       });
 
-      console.log(tests);
       Cypress.grep(tests.join(';'));
 
       // when checked, grep only selected tests in spec
