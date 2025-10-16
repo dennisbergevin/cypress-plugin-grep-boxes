@@ -24,6 +24,7 @@ export const greppedTestToggle = () => {
         #grepTestToggleControls label {
           background-color: transparent;
           padding-top: 5px;
+          padding-right: 2px;
         }
         #grepTestToggleControls #grepTestToggleTooltip {
           visibility: hidden;
@@ -34,13 +35,16 @@ export const greppedTestToggle = () => {
           padding: 5px;
           border-radius: 3px;
           position: absolute;
-          z-index: 1;
-          top: 27px;
-          left: 0px;
+          z-index: 99999;
+          top: 33px;
+          right: -2px;
           height: 28px;
+          overflow: visible;
         }
         #grepTestToggleControls:hover #grepTestToggleTooltip {
           visibility: visible;
+          z-index: 99999;
+          overflow: visible;
         }
         #grepTestToggleButton #grepTestToggleLabel {
           cursor: pointer;
@@ -49,14 +53,19 @@ export const greppedTestToggle = () => {
           content: " ";
           position: absolute;
           bottom: 100%;  /* At the top of the tooltip */
-          right: 85%;
+          left: 89%;
+          z-index: 99999;
           margin-left: -5px;
           border-width: 5px;
           border-style: solid;
+          overflow: visible;
           border-color: transparent transparent #f3f4fa transparent;
         }
         .reporter:has(#grepTestToggle:checked) .command.command-name-request:has(.command-is-event) {
           display:none
+        }
+        .spec-container {
+          overflow: visible !important
         }
         `;
   const turnOngrepTestToggleIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#afb3c7" class="bi bi-collection-play-fill" viewBox="0 0 16 16">
@@ -73,17 +82,27 @@ export const greppedTestToggle = () => {
 
   // append styles
   if (!hasStyles) {
-    const reporterEl = window.top?.document.querySelector('#unified-reporter');
+    let reporterEl;
     const reporterStyleEl = document.createElement('style');
+    if (Cypress.version >= '15.0.0') {
+      reporterEl = window.top?.document.querySelector('.runnable-header');
+    } else {
+      reporterEl = window.top?.document.querySelector('#unified-reporter');
+    }
     reporterStyleEl.setAttribute('id', 'grepTestToggleStyle');
     reporterStyleEl.innerHTML = defaultStyles;
     reporterEl?.appendChild(reporterStyleEl);
   }
 
   if (!hasToggleButton) {
-    const header = window.top?.document.querySelector(
-      '#unified-reporter header'
-    );
+    let header;
+    if (Cypress.version >= '15.0.0') {
+      // TODO: Cypress v15 GUI provides option for Cypress Studio which pushes the grep toggle button around the UI
+      // For simplicity, moving the toggle button to the spec container above the stop button
+      header = window.top?.document.querySelector('.runnable-header');
+    } else {
+      header = window.top?.document.querySelector('#unified-reporter header');
+    }
     const headerToggleDiv = document.createElement('div');
     const headerToggleSpan = document.createElement('span');
     const headerToggleTooltip = document.createElement('span');
@@ -98,7 +117,6 @@ export const greppedTestToggle = () => {
     headerToggleLabel.setAttribute('id', 'grepTestToggleLabel');
     headerToggleLabel.innerHTML = turnOffgrepTestToggleIcon;
 
-    headerToggleDiv.setAttribute('class', 'controls');
     headerToggleDiv.setAttribute('id', 'grepTestToggleControls');
     headerToggleTooltip.setAttribute('id', 'grepTestToggleTooltip');
     headerToggleTooltip.innerText = turnOffgrepTestToggleDescription;
@@ -108,6 +126,7 @@ export const greppedTestToggle = () => {
     );
     headerToggleButton.setAttribute('id', 'grepTestToggleButton');
 
+    headerToggleDiv.setAttribute('class', 'controls');
     header?.appendChild(headerToggleDiv);
     headerToggleDiv?.appendChild(headerToggleSpan);
     headerToggleDiv?.appendChild(headerToggleTooltip);
@@ -152,6 +171,7 @@ export const greppedTestToggle = () => {
             1
           );
         }
+
         // if a non-checked test's title includes a checked test's title, invert grep for unchecked title
         uncheckedTests.forEach((u) => {
           if (u.includes(t)) {
@@ -160,6 +180,7 @@ export const greppedTestToggle = () => {
         });
       });
 
+      console.log(tests);
       Cypress.grep(tests.join(';'));
 
       // when checked, grep only selected tests in spec
@@ -188,6 +209,7 @@ export const addGrepButtons = () => {
 
   const defaultStyles = `
   .grep-tests-btn {
+    pointer-events: auto;
     background: none;
     color: inherit;
     padding: 0 20px;
@@ -207,9 +229,16 @@ export const addGrepButtons = () => {
     runnablesStyleEl.innerHTML = defaultStyles;
     runnablesEl?.appendChild(runnablesStyleEl);
   }
-  const testsAndSuites = window.top?.document.querySelectorAll(
-    '.test.runnable, .suite.runnable'
-  );
+  let testsAndSuites;
+  if (Cypress.version >= '15.0.0') {
+    // TODO: Cypress v15 implemented a new suite naming convention that utilizes " > " separator between nested suites
+    // For now, only allowing tests to be selected for simplicity
+    testsAndSuites = window.top?.document.querySelectorAll('.test.runnable');
+  } else {
+    testsAndSuites = window.top?.document.querySelectorAll(
+      '.test.runnable, .suite.runnable'
+    );
+  }
   [...testsAndSuites].forEach((t) => {
     const header = t.querySelector('.collapsible-header');
     const title = header.querySelector('.runnable-title');
@@ -259,7 +288,7 @@ export const addGrepButtons = () => {
 
     // To prevent a checkbox from expanding a runnable, click the collapsible
     grepTestsBtn?.addEventListener('change', (e) => {
-      if (e.target.checked) {
+      if (e.target.checked || e.target.unchecked) {
         header.click();
       }
     });
