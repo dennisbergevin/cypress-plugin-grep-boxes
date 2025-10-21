@@ -336,19 +336,6 @@ const addGrepButtons = () => {
 
 export const addTags = () => {
   const defaultStyles = `
-[data-attribute="test-tags"] {
-    all: unset;
-    color: black;
-    padding: 0.1rem 0.2rem;
-    font-size: 0.875rem;
-    font-weight: bold;
-    border-radius: 2px;
-    display: inline-flex;
-    align-items: center;
-    white-space: nowrap;
-    cursor: pointer;
-    pointer-events: auto;
-}
 [data-attribute="test-tags"]:focus {
     box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.9);;
     outline: none;
@@ -360,7 +347,7 @@ export const addTags = () => {
     if (!hasStyles) {
       const runnablesStyleEl = window.top?.document.createElement('style');
       const runnables = window.top?.document.querySelector('.runnables');
-      runnables.setAttribute('id', 'tagPillStyle');
+      runnablesStyleEl.setAttribute('id', 'tagPillStyle');
       runnablesStyleEl.innerHTML = defaultStyles;
       runnables?.appendChild(runnablesStyleEl);
     }
@@ -443,6 +430,16 @@ function renderTagPills(tags, container) {
       'style',
       `
     background: ${bgColor};
+    color: black;
+    padding: 0.1rem 0.2rem;
+    font-size: 0.875rem;
+    font-weight: bold;
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    cursor: pointer;
+    pointer-events: auto;
   `
     );
 
