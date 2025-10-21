@@ -335,24 +335,26 @@ const addGrepButtons = () => {
 };
 
 export const addTags = () => {
-  const testsAndSuites =
-    window.top?.document.querySelectorAll('.test.runnable');
-  [...testsAndSuites].forEach((t) => {
-    const header = t.querySelector('.collapsible-header');
-    const collapsibleHeaderText = header?.querySelector(
-      '.collapsible-header-text'
-    );
-    if (!collapsibleHeaderText.className.includes('flex flex-wrap gap-2')) {
-      collapsibleHeaderText.className += ' flex flex-wrap gap-2';
-    }
-    const title = header.querySelector('.runnable-title');
-    const testName = title.innerText.split('\n')[0];
-    const allSpecTags = Cypress.env('specTags');
-    const testTag = getTagsForTitle(testName, allSpecTags);
-    if (t.querySelectorAll('[data-attribute="test-tags"]').length === 0) {
-      renderTagPills(testTag, title);
-    }
-  });
+  if (Cypress.env('specTags')) {
+    const testsAndSuites =
+      window.top?.document.querySelectorAll('.test.runnable');
+    [...testsAndSuites].forEach((t) => {
+      const header = t.querySelector('.collapsible-header');
+      const collapsibleHeaderText = header?.querySelector(
+        '.collapsible-header-text'
+      );
+      if (!collapsibleHeaderText.className.includes('flex flex-wrap gap-2')) {
+        collapsibleHeaderText.className += ' flex flex-wrap gap-2';
+      }
+      const title = header.querySelector('.runnable-title');
+      const testName = title.innerText.split('\n')[0];
+      const allSpecTags = Cypress.env('specTags');
+      const testTag = getTagsForTitle(testName, allSpecTags);
+      if (t.querySelectorAll('[data-attribute="test-tags"]').length === 0) {
+        renderTagPills(testTag, title);
+      }
+    });
+  }
 };
 
 function getTagsForTitle(title, fullTagsObj) {
