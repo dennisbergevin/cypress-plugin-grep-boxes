@@ -10,12 +10,16 @@ context('Window', () => {
     cy.window().should('have.property', 'top');
   });
 
-  it('cy.document() - get the document object', () => {
-    // https://on.cypress.io/document
-    cy.document().should('have.property', 'charset').and('eq', 'UTF-8');
-  });
+  it(
+    'cy.document() - get the document object',
+    { tags: ['@sanity', '@smoke'] },
+    () => {
+      // https://on.cypress.io/document
+      cy.document().should('have.property', 'charset').and('eq', 'UTF-8');
+    }
+  );
 
-  it('cy.title() - get the title', () => {
+  it('cy.title() - get the title', { tags: '@title' }, () => {
     // https://on.cypress.io/title
     cy.title().should('include', 'Kitchen Sink');
   });

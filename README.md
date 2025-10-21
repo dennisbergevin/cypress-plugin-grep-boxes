@@ -6,11 +6,12 @@
 A companion Cypress plugin for <code>cy-grep</code> that allows user to run specific test(s) in <code>open</code> mode.
 </p>
 
-![Cypress-plugin-grep-boxes](./assets/cypress-plugin-grep-boxes-demo.gif)
+![Cypress-plugin-grep-boxes](./assets/cy-grep-boxes-demo.gif)
 
 ## Features
 
 - ✅ A new UI test selection within `cypress open` to filter and run only selected tests in a given spec
+- 🚩 _NEW_ in v2.0.0: Tags are now displayed and can be clicked to filter by respective tag in `cypress open`
 
 #### Table of Contents
 
@@ -34,14 +35,14 @@ npm install --save-dev cypress-plugin-grep-boxes
 
 2. In `cypress/support/e2e.js` (For E2E tests) and/or `cypress/support/component.js` (For Component tests),
 
+> [!IMPORTANT]
+> In the plugin version 2.0.0, the `e2e.js` (or `component.js`) support file import has been updated for simplicity:
+
 ```js
-import { greppedTestToggle, addGrepButtons } from 'cypress-plugin-grep-boxes';
+import 'cypress-plugin-grep-boxes';
 import registerCypressGrep from '@bahmutov/cy-grep/src/support';
 
 registerCypressGrep();
-
-greppedTestToggle();
-addGrepButtons();
 ```
 
 ---
@@ -64,7 +65,10 @@ addGrepButtons();
 
 ## ✅ Open mode
 
-Within each spec, you can select any given number of suite(s) or individual test(s) and click the filter toggle located on the reporter above:
+Within each spec in Cypress `open` mode:
+
+- You can select any given number of individual test(s) and click the filter toggle located on the reporter above
+- You can click on any available tag and run only tests in the spec with the respective tag
 
 ![Cypress grep-boxes within UI mode](./assets/grep-boxes-ui.png)
 
