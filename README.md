@@ -28,6 +28,9 @@ A companion Cypress plugin for <code>cy-grep</code> that allows user to run spec
 
 1. Install the following packages:
 
+> [!NOTE]
+> To support `cypress-plugin-grep-boxes` displaying test tags in the Cypress Test Runner, `@bahmutov/cy-grep` must be on version >= 2.1.0
+
 ```sh
 npm install --save-dev @bahmutov/cy-grep # Dependent package for the plugin
 npm install --save-dev cypress-plugin-grep-boxes

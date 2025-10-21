@@ -1,11 +1,9 @@
-import registerCypressGrep from '@bahmutov/cy-grep';
 /**
  * Adds a toggle to reporter to grep selected tests.
  */
 
 const tests = [];
 
-registerCypressGrep();
 const hasStyles = window.top?.document.querySelector('#grepTestToggleStyle');
 const hasToggleButton = window.top?.document.querySelector('#grepTestToggle');
 const defaultStyles = `
@@ -333,6 +331,10 @@ const addGrepButtons = () => {
     });
   });
 };
+
+/**
+ * Adds a clickable test tag for each respective test in Cypress open mode.
+ */
 
 export const addTags = () => {
   const defaultStyles = `
