@@ -455,23 +455,24 @@ Cypress.on('test:before:run', () => {
   }
 });
 
-// To account for when the collapsible runnables are removed, add back grep buttons
-if (
-  // if the grep test toggle is checked, do not show checkboxes on each runnable
-  window.top?.document.querySelectorAll('#grepTestToggle:checked').length === 0
-) {
-  // watching for changes to DOM structure
-  MutationObserver = window.MutationObserver;
+// To account for when the collapsible runnables are removed, add back tags and grep buttons
+// watching for changes to DOM structure
+MutationObserver = window.MutationObserver;
 
-  var observer = new MutationObserver(function () {
+var observer = new MutationObserver(function () {
+  if (
+    // if the grep test toggle is checked, do not show checkboxes on each runnable
+    window.top?.document.querySelectorAll('#grepTestToggle:checked').length ===
+    0
+  ) {
     // fired when a mutation occurs
     addGrepButtons();
-    addTags();
-  });
+  }
+  addTags();
+});
 
-  // defining the window.top?.document to be observed by the observer
-  observer.observe(window.top?.document, {
-    subtree: true,
-    attributes: true,
-  });
-}
+// defining the window.top?.document to be observed by the observer
+observer.observe(window.top?.document, {
+  subtree: true,
+  attributes: true,
+});
