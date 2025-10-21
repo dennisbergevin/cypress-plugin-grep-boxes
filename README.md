@@ -6,7 +6,7 @@
 A companion Cypress plugin for <code>cy-grep</code> that allows user to run specific test(s) in <code>open</code> mode.
 </p>
 
-![Cypress-plugin-grep-boxes](./assets/cy-grep-boxes-demo.gif)
+![cy-grep-boxes-demo](https://github.com/user-attachments/assets/5845963d-32a0-49a6-99be-3b81ca7d6f29)
 
 ## Features
 
@@ -73,7 +73,8 @@ Within each spec in Cypress `open` mode:
 - You can select any given number of individual test(s) and click the filter toggle located on the reporter above
 - You can click on any available tag and run only tests in the spec with the respective tag
 
-![Cypress grep-boxes within UI mode](./assets/grep-boxes-ui.png)
+<img width="295" height="182" alt="grep-boxes-ui" src="https://github.com/user-attachments/assets/fad9ebc9-e417-41aa-9f31-519855113d17" />
+
 
 ### Use Required Test Tags Instead Of Skipping Tests
 
@@ -104,7 +105,8 @@ Cypress Test Runner UI automatically runs available tests once a spec file is op
 
 To prevent this behavior to have control of when and which tests to run, add the environment variable `disableInitialAutoRun=true`:
 
-![disableInitialAutoRun Demo](./assets/disableInitialAutoRun_demo.gif)
+![disableInitialAutoRun_demo](https://github.com/user-attachments/assets/95fc4807-847b-432e-9b03-dc4fbe9f955a)
+
 
 ```bash
 # Example via CLI
