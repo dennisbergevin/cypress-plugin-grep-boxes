@@ -335,7 +335,36 @@ const addGrepButtons = () => {
 };
 
 export const addTags = () => {
+  const defaultStyles = `
+[data-attribute="test-tags"] {
+    all: unset;
+    color: black;
+    padding: 0.1rem 0.2rem;
+    font-size: 0.875rem;
+    font-weight: bold;
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    cursor: pointer;
+    pointer-events: auto;
+}
+[data-attribute="test-tags"]:focus {
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.9);;
+    outline: none;
+}
+`;
   if (Cypress.env('specTags')) {
+    const hasStyles = window.top?.document.querySelector('#tagPillStyle');
+
+    if (!hasStyles) {
+      const runnablesStyleEl = window.top?.document.createElement('style');
+      const runnables = window.top?.document.querySelector('.runnables');
+      runnables.setAttribute('id', 'tagPillStyle');
+      runnablesStyleEl.innerHTML = defaultStyles;
+      runnables?.appendChild(runnablesStyleEl);
+    }
+
     const testsAndSuites =
       window.top?.document.querySelectorAll('.test.runnable');
     [...testsAndSuites].forEach((t) => {
@@ -413,18 +442,7 @@ function renderTagPills(tags, container) {
     pill.setAttribute(
       'style',
       `
-    all: unset;
     background: ${bgColor};
-    color: black;
-    padding: 0.1rem 0.2rem;
-    font-size: 0.875rem;
-    font-weight: bold;
-    border-radius: 2px;
-    display: inline-flex;
-    align-items: center;
-    white-space: nowrap;
-    cursor: pointer;
-    pointer-events: auto;
   `
     );
 
