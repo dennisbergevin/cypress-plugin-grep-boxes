@@ -1,6 +1,6 @@
 {
   "name": "cypress-plugin-grep-boxes",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Cypress plugin that allows user to run specific tests in open mode.",
   "main": "./index.js",
   "keywords": [
