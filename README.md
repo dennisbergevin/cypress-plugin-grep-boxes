@@ -78,7 +78,7 @@ Within each spec in Cypress `open` mode:
 
 ### Using cypress-plugin-filter-runnables
 
-_NEW_ in v2.1.0: If filtering tests using [cypress-plugin-filter-runnables](https://github.com/dennisbergevin/cypress-plugin-filter-runnables), simply click the filter toggle located on the reporter above to only run those tests.
+**NEW** in v2.1.0: If filtering tests using [cypress-plugin-filter-runnables](https://github.com/dennisbergevin/cypress-plugin-filter-runnables), simply click the filter toggle located on the reporter above to only run those tests.
 
 No need to check each checkbox of each test you see after filtering by test title!
 
