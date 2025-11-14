@@ -177,12 +177,37 @@ grepTestToggleElement?.addEventListener('change', (e) => {
       });
     });
 
+    // run all tests displayed in the spec if none are checked
+    // this enables cohesion with this plugin and cypress-plugin-filter-runnables
+    // the display: none is used to hide runnables not matching a filter
+    if (tests.length === 0) {
+      const checkboxes = [
+        ...window.top?.document.querySelectorAll('.grep-test-checkbox'),
+      ].filter((box) => {
+        const runnable = box.closest('.runnable');
+        return runnable && window.getComputedStyle(runnable).display !== 'none';
+      });
+
+      checkboxes.forEach((box) => tests.push(box.value));
+    }
+
     Cypress.grep(tests.join(';'));
 
     // when checked, grep only selected tests in spec
     grepTestToggleLabelElement.innerHTML = turnOngrepTestToggleIcon;
     grepTestToggleTooltipElement.innerHTML = turnOngrepTestToggleDescription;
   } else {
+    // for cypress-plugin-filter-runnables to clear search when grepTestToggle is unchecked
+    const searchInput = window.top?.document.querySelector(
+      '#test-suite-filter-search'
+    );
+    const clearBtn = window.top?.document.querySelector(
+      '#clear-test-suite-filter-search'
+    );
+    if (searchInput != '') {
+      clearBtn?.click();
+    }
+
     if (stopBtn) {
       stopBtn.click();
     }

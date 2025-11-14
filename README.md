@@ -18,6 +18,7 @@ A companion Cypress plugin for <code>cy-grep</code> that allows user to run spec
 - [Installation](#-installation)
 - [Setup](#-setup)
 - [Open mode](#-open-mode)
+  - [Using cypress-plugin-filter-runnables](#using-cypress-plugin-filter-runnables)
   - [Use Required Test Tags Instead Of Skipping Tests](#use-required-test-tags-instead-of-skipping-tests)
 - [disableInitialAutoRun](#disableInitialAutoRun)
 - [Contributions](#contributions)
@@ -75,6 +76,11 @@ Within each spec in Cypress `open` mode:
 
 <img width="295" height="182" alt="grep-boxes-ui" src="https://github.com/user-attachments/assets/fad9ebc9-e417-41aa-9f31-519855113d17" />
 
+### Using cypress-plugin-filter-runnables
+
+**NEW** in v2.1.0: If filtering tests using [cypress-plugin-filter-runnables](https://github.com/dennisbergevin/cypress-plugin-filter-runnables), simply click the filter toggle located on the reporter above to only run those tests.
+
+No need to check each checkbox of each test you see after filtering by test title!
 
 ### Use Required Test Tags Instead Of Skipping Tests
 
@@ -106,7 +112,6 @@ Cypress Test Runner UI automatically runs available tests once a spec file is op
 To prevent this behavior to have control of when and which tests to run, add the environment variable `disableInitialAutoRun=true`:
 
 ![disableInitialAutoRun_demo](https://github.com/user-attachments/assets/95fc4807-847b-432e-9b03-dc4fbe9f955a)
-
 
 ```bash
 # Example via CLI
