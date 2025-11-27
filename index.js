@@ -406,7 +406,13 @@ function getTagsForTitle(title, fullTagsObj) {
     return []; // Title not found
   }
 
-  return [...test.effectiveTestTags, ...test.requiredTestTags];
+  const allTags = [...test.effectiveTestTags, ...test.requiredTestTags];
+  const tagsToExclude = Cypress.env('hideSpecTags');
+
+  if (!tagsToExclude?.length) return allTags;
+
+  // Filter out excluded tags
+  return allTags.filter((tag) => !tagsToExclude?.includes(tag));
 }
 
 function renderTagPills(tags, container) {
