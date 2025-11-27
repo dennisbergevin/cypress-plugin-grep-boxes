@@ -20,6 +20,7 @@ A companion Cypress plugin for <code>cy-grep</code> that allows user to run spec
 - [Open mode](#-open-mode)
   - [Using cypress-plugin-filter-runnables](#using-cypress-plugin-filter-runnables)
   - [Use Required Test Tags Instead Of Skipping Tests](#use-required-test-tags-instead-of-skipping-tests)
+- [hideSpecTags](#hideSpecTags)
 - [disableInitialAutoRun](#disableInitialAutoRun)
 - [Contributions](#contributions)
 
@@ -104,6 +105,24 @@ To run just those tests with the required tag `@skip` in interactive mode:
 ```bash
 npx cypress open --env grepTags=@skip
 ```
+
+## hideSpecTags
+
+The `cypress-plugin-grep-boxes` plugin (new in v2.0.0) displays all available `effectiveTestTags` in the Cypress Test Runner for each test.
+
+If for any reason you'd like to exclude specific tags from being added to the Cypress Test Runner, use the environment variable `hideSpecTags` set to an array of tags you do not want to be displayed in the Cypress Test Runner.
+
+Example:
+
+```json
+{
+  "env": {
+    "hideSpecTags": ["@smoke", "@sanity"]
+  }
+}
+```
+
+The example above would not add any tags to Cypress Test Runner titled `@smoke` and `@sanity`.
 
 ## disableInitialAutoRun
 
