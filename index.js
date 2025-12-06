@@ -402,17 +402,45 @@ export const addTags = () => {
 
 function getTagsForTitle(title, fullTagsObj) {
   const test = fullTagsObj[title];
-  if (!test) {
-    return []; // Title not found
-  }
+  if (!test) return [];
 
   const allTags = [...test.effectiveTestTags, ...test.requiredTestTags];
-  const tagsToExclude = Cypress.env('hideSpecTags');
 
-  if (!tagsToExclude?.length) return allTags;
+  let raw = Cypress.env('hideSpecTags');
+  if (!raw) return allTags;
 
-  // Filter out excluded tags
-  return allTags.filter((tag) => !tagsToExclude?.includes(tag));
+  let rules = Array.isArray(raw)
+    ? raw
+    : String(raw)
+        .split(',')
+        .map((s) => s.trim());
+
+  const includeSet = new Set();
+  const excludeSet = new Set();
+  let hideAll = false;
+
+  for (const r of rules) {
+    if (r === '*') {
+      hideAll = true;
+      continue;
+    }
+    if (r.startsWith('+')) {
+      includeSet.add(r.substring(1));
+    } else {
+      excludeSet.add(r);
+    }
+  }
+
+  // Apply logic
+  return allTags.filter((tag) => {
+    if (includeSet.has(tag)) return true;
+
+    if (hideAll) return false;
+
+    if (excludeSet.has(tag)) return false;
+
+    return true;
+  });
 }
 
 function renderTagPills(tags, container) {

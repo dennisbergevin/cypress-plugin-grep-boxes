@@ -110,7 +110,9 @@ npx cypress open --env grepTags=@skip
 
 The `cypress-plugin-grep-boxes` plugin (new in v2.0.0) displays all available `effectiveTestTags` in the Cypress Test Runner for each test.
 
-If for any reason you'd like to exclude specific tags from being added to the Cypress Test Runner, use the environment variable `hideSpecTags` set to an array of tags you do not want to be displayed in the Cypress Test Runner.
+If for any reason you'd like to exclude tags from being displayed in the Cypress Test Runner, use the environment variable `hideSpecTags` set to an array of tags you do not want to be displayed in the Cypress Test Runner.
+
+### Hide specific tags
 
 Example:
 
@@ -122,7 +124,35 @@ Example:
 }
 ```
 
-The example above would not add any tags to Cypress Test Runner titled `@smoke` and `@sanity`.
+The example above would hide `@smoke` and `@sanity` tags, but show all other tags, in the Cypress Test Runner.
+
+### Hide all tags
+
+If you'd like to exclude all tags from being displayed in the Cypress Test Runner, use the following:
+
+```json
+{
+  "env": {
+    "hideSpecTags": ["*"]
+  }
+}
+```
+
+The example above would not display ANY tags to Cypress Test Runner.
+
+### Hide all tags EXCEPT specified
+
+If you'd like to ONLY display a specific subset of tags in the Cypress Test Runner, prefix tags you'd like to see displayed with `+`:
+
+```json
+{
+  "env": {
+    "hideSpecTags": ["*", "+@smoke", "+@sanity"]
+  }
+}
+```
+
+The example above would hide all tags EXCEPT `@smoke` and `@sanity` tags in the Cypress Test Runner.
 
 ## disableInitialAutoRun
 
