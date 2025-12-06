@@ -431,7 +431,7 @@ function getTagsForTitle(title, fullTagsObj) {
     }
   }
 
-  // Apply logic
+  // Apply tag display filtering logic
   return allTags.filter((tag) => {
     if (includeSet.has(tag)) return true;
 
