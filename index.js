@@ -247,7 +247,7 @@ if (Cypress.config('isInteractive')) {
 if (Cypress.config('isInteractive')) {
   if (
     // if the grep test toggle is not checked, do not run tests
-    Cypress.env('disableInitialAutoRun') &&
+    Cypress.expose('disableInitialAutoRun') &&
     window.top?.document.querySelectorAll('#grepTestToggle:checked').length ===
       0
   ) {
@@ -368,7 +368,7 @@ export const addTags = () => {
     outline: none;
 }
 `;
-  if (Cypress.env('specTags')) {
+  if (Cypress.expose('specTags')) {
     const hasStyles = window.top?.document.querySelector('#tagPillStyle');
 
     if (!hasStyles) {
@@ -391,7 +391,7 @@ export const addTags = () => {
       }
       const title = header.querySelector('.runnable-title');
       const testName = title.innerText.split('\n')[0];
-      const allSpecTags = Cypress.env('specTags');
+      const allSpecTags = Cypress.expose('specTags');
       const testTag = getTagsForTitle(testName, allSpecTags);
       if (t.querySelectorAll('[data-attribute="test-tags"]').length === 0) {
         renderTagPills(testTag, title);
@@ -406,7 +406,7 @@ function getTagsForTitle(title, fullTagsObj) {
 
   const allTags = [...test.effectiveTestTags, ...test.requiredTestTags];
 
-  let raw = Cypress.env('hideSpecTags');
+  let raw = Cypress.expose('hideSpecTags');
   if (!raw) return allTags;
 
   let rules = Array.isArray(raw)
