@@ -54,11 +54,11 @@ registerCypressGrep();
 
 ## 🦺 Setup
 
-**Recommended**: Set two common environment variables tied to the `@bahmutov/cy-grep` package to enhance the experience utilizing the grep logic within the Cypress Test Runner UI using cypress open:
+**Recommended**: Set two common expose variables tied to the `@bahmutov/cy-grep` package to enhance the experience utilizing the grep logic within the Cypress Test Runner UI using cypress open:
 
 ```json
 {
-  "env": {
+  "expose": {
     "grepOmitFiltered": true,
     "grepFilterSpecs": true
   }
@@ -98,19 +98,19 @@ it('deletes an item', { requiredTags: '@skip' }, () => {
 });
 ```
 
-Now running or opening Cypress in interactive mode, **you will not see any tests with `requiredTags` including `@skip`** (unless setting environment variable `grepTags=@skip`).
+Now running or opening Cypress in interactive mode, **you will not see any tests with `requiredTags` including `@skip`** (unless setting expose variable `grepTags=@skip`).
 
 To run just those tests with the required tag `@skip` in interactive mode:
 
 ```bash
-npx cypress open --env grepTags=@skip
+npx cypress open --expose grepTags=@skip
 ```
 
 ## hideSpecTags
 
 The `cypress-plugin-grep-boxes` plugin (new in v2.0.0) displays all available `effectiveTestTags` in the Cypress Test Runner for each test.
 
-If for any reason you'd like to exclude tags from being displayed in the Cypress Test Runner, use the environment variable `hideSpecTags` set to an array of tags you do not want to be displayed in the Cypress Test Runner.
+If for any reason you'd like to exclude tags from being displayed in the Cypress Test Runner, use the expose variable `hideSpecTags` set to an array of tags you do not want to be displayed in the Cypress Test Runner.
 
 ### Hide specific tags
 
@@ -118,7 +118,7 @@ Example:
 
 ```json
 {
-  "env": {
+  "expose": {
     "hideSpecTags": ["@smoke", "@sanity"]
   }
 }
@@ -132,7 +132,7 @@ If you'd like to exclude all tags from being displayed in the Cypress Test Runne
 
 ```json
 {
-  "env": {
+  "expose": {
     "hideSpecTags": ["*"]
   }
 }
@@ -146,7 +146,7 @@ If you'd like to ONLY display a specific subset of tags in the Cypress Test Runn
 
 ```json
 {
-  "env": {
+  "expose": {
     "hideSpecTags": ["*", "+@smoke", "+@sanity"]
   }
 }
@@ -158,22 +158,22 @@ The example above would hide all tags EXCEPT `@smoke` and `@sanity` tags in the 
 
 Cypress Test Runner UI automatically runs available tests once a spec file is open.
 
-To prevent this behavior to have control of when and which tests to run, add the environment variable `disableInitialAutoRun=true`:
+To prevent this behavior to have control of when and which tests to run, add the expose variable `disableInitialAutoRun=true`:
 
 ![disableInitialAutoRun_demo](https://github.com/user-attachments/assets/95fc4807-847b-432e-9b03-dc4fbe9f955a)
 
 ```bash
 # Example via CLI
-npx cypress open --env disableInitialAutoRun=true
+npx cypress open --expose disableInitialAutoRun=true
 ```
 
-**Tip:** you can set this environment variable in the [config file](https://docs.cypress.io/guides/references/configuration) file to enable it by default and skip using the environment variable:
+**Tip:** you can set this expose variable in the [config file](https://docs.cypress.io/guides/references/configuration) file to enable it by default and skip using the expose variable:
 
 ```js
 // config file
 {
   "e2e": {
-    "env": {
+    "expose": {
       "disableInitialAutoRun": true
     }
   }
