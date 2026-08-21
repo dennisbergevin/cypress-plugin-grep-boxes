@@ -141,12 +141,19 @@ const grepTestToggleTooltipElement = window.top?.document
   ?.contentDocument?.querySelector('#grepTestToggleTooltip');
 
 grepTestToggleElement?.addEventListener('change', (e) => {
+  const stopBtn = window.top?.document
+    .querySelector('iframe')
+    ?.contentDocument?.querySelector('.statsAndControls .stop');
+  // TODO: The cy-grep package has not been updated to handle the new Cypress runner UI iframe
+  // Remove this restartBtn handling once that package has been updated
   const restartBtn = window.top?.document
     .querySelector('iframe')
     ?.contentDocument?.querySelector('.statsAndControls .restart');
 
   if (e.target.checked) {
-    if (restartBtn) {
+    if (stopBtn) {
+      stopBtn.click();
+    } else {
       restartBtn.click();
     }
     // store all checked checkbox values then send to grep in accepted format
@@ -215,7 +222,9 @@ grepTestToggleElement?.addEventListener('change', (e) => {
       clearBtn?.click();
     }
 
-    if (restartBtn) {
+    if (stopBtn) {
+      stopBtn.click();
+    } else {
       restartBtn.click();
     }
     // when unchecked, ungrep and show all tests in spec
