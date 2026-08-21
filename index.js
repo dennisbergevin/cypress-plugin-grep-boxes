@@ -4,8 +4,12 @@
 
 const tests = [];
 
-const hasStyles = window.top?.document.querySelector('#grepTestToggleStyle');
-const hasToggleButton = window.top?.document.querySelector('#grepTestToggle');
+const hasStyles = window.top?.document
+  .querySelector('iframe')
+  ?.contentDocument?.querySelector('#grepTestToggleStyle');
+const hasToggleButton = window.top?.document
+  .querySelector('iframe')
+  ?.contentDocument?.querySelector('#grepTestToggle');
 const defaultStyles = `
         .reporter header {
           overflow: visible;
@@ -81,11 +85,9 @@ const turnOngrepTestToggleDescription = 'Unfilter selected tests';
 if (!hasStyles) {
   let reporterEl;
   const reporterStyleEl = document.createElement('style');
-  if (Cypress.version >= '15.0.0') {
-    reporterEl = window.top?.document.querySelector('.runnable-header');
-  } else {
-    reporterEl = window.top?.document.querySelector('#unified-reporter');
-  }
+  reporterEl = window.top?.document
+    .querySelector('iframe')
+    ?.contentDocument?.querySelector('.spec-container');
   reporterStyleEl.setAttribute('id', 'grepTestToggleStyle');
   reporterStyleEl.innerHTML = defaultStyles;
   reporterEl?.appendChild(reporterStyleEl);
@@ -93,13 +95,9 @@ if (!hasStyles) {
 
 if (!hasToggleButton) {
   let header;
-  if (Cypress.version >= '15.0.0') {
-    // TODO: Cypress v15 GUI provides option for Cypress Studio which pushes the grep toggle button around the UI
-    // For simplicity, moving the toggle button to the spec container above the stop button
-    header = window.top?.document.querySelector('.runnable-header');
-  } else {
-    header = window.top?.document.querySelector('#unified-reporter header');
-  }
+  header = window.top?.document
+    .querySelector('iframe')
+    ?.contentDocument?.querySelector('.spec-container');
   const headerToggleDiv = document.createElement('div');
   const headerToggleSpan = document.createElement('span');
   const headerToggleTooltip = document.createElement('span');
@@ -132,31 +130,38 @@ if (!hasToggleButton) {
   headerToggleButton?.appendChild(headerToggleLabel);
 }
 
-const grepTestToggleElement =
-  window.top?.document.querySelector('#grepTestToggle');
-const grepTestToggleLabelElement = window.top?.document.querySelector(
-  '[for=grepTestToggle]'
-);
-const grepTestToggleTooltipElement = window.top?.document.querySelector(
-  '#grepTestToggleTooltip'
-);
+const grepTestToggleElement = window.top?.document
+  .querySelector('iframe')
+  ?.contentDocument?.querySelector('#grepTestToggle');
+const grepTestToggleLabelElement = window.top?.document
+  .querySelector('iframe')
+  ?.contentDocument?.querySelector('[for=grepTestToggle]');
+const grepTestToggleTooltipElement = window.top?.document
+  .querySelector('iframe')
+  ?.contentDocument?.querySelector('#grepTestToggleTooltip');
 
 grepTestToggleElement?.addEventListener('change', (e) => {
-  const stopBtn = window.top?.document.querySelector('.reporter .stop');
+  const restartBtn = window.top?.document
+    .querySelector('iframe')
+    ?.contentDocument?.querySelector('.statsAndControls .restart');
 
   if (e.target.checked) {
-    if (stopBtn) {
-      stopBtn.click();
+    if (restartBtn) {
+      restartBtn.click();
     }
     // store all checked checkbox values then send to grep in accepted format
     const tests = [
-      ...window.top?.document.querySelectorAll('.grep-test-checkbox:checked'),
+      ...window.top?.document
+        .querySelector('iframe')
+        ?.contentDocument?.querySelectorAll('.grep-test-checkbox:checked'),
     ].map((e) => e.value);
     // store all non-checked checkbox values
     const uncheckedTests = [
-      ...window.top?.document.querySelectorAll(
-        '.grep-test-checkbox:not(:checked)'
-      ),
+      ...window.top?.document
+        .querySelector('iframe')
+        ?.contentDocument?.querySelectorAll(
+          '.grep-test-checkbox:not(:checked)'
+        ),
     ].map((e) => e.value);
 
     tests.forEach((t) => {
@@ -182,7 +187,9 @@ grepTestToggleElement?.addEventListener('change', (e) => {
     // the display: none is used to hide runnables not matching a filter
     if (tests.length === 0) {
       const checkboxes = [
-        ...window.top?.document.querySelectorAll('.grep-test-checkbox'),
+        ...window.top?.document
+          .querySelector('iframe')
+          ?.contentDocument?.querySelectorAll('.grep-test-checkbox'),
       ].filter((box) => {
         const runnable = box.closest('.runnable');
         return runnable && window.getComputedStyle(runnable).display !== 'none';
@@ -208,8 +215,8 @@ grepTestToggleElement?.addEventListener('change', (e) => {
       clearBtn?.click();
     }
 
-    if (stopBtn) {
-      stopBtn.click();
+    if (restartBtn) {
+      restartBtn.click();
     }
     // when unchecked, ungrep and show all tests in spec
     Cypress.grep();
@@ -229,8 +236,9 @@ if (Cypress.config('isInteractive')) {
     const sidebarSpecLinkPage = window.top?.document.querySelector(
       '[data-cy="sidebar-link-specs-page"]'
     );
-    const grepTestToggleElement =
-      window.top?.document.querySelector('#grepTestToggle');
+    const grepTestToggleElement = window.top?.document
+      .querySelector('iframe')
+      ?.contentDocument?.querySelector('#grepTestToggle');
 
     if (
       window.top?.document.URL !=
@@ -248,7 +256,9 @@ if (Cypress.config('isInteractive')) {
   if (
     // if the grep test toggle is not checked, do not run tests
     Cypress.expose('disableInitialAutoRun') &&
-    window.top?.document.querySelectorAll('#grepTestToggle:checked').length ===
+    window.top?.document
+      .querySelector('iframe')
+      ?.contentDocument?.querySelectorAll('#grepTestToggle:checked').length ===
       0
   ) {
     const sidebarSpecLinkPage = window.top?.document.querySelector(
@@ -265,7 +275,9 @@ if (Cypress.config('isInteractive')) {
  */
 
 const addGrepButtons = () => {
-  const hasStyles = window.top?.document.querySelector('#grepButtonsStyle');
+  const hasStyles = window.top?.document
+    .querySelector('iframe')
+    ?.contentDocument?.querySelector('#grepButtonsStyle');
 
   const grepTestsBtnClass = 'grep-tests-btn';
 
@@ -285,22 +297,18 @@ const addGrepButtons = () => {
   `;
 
   if (!hasStyles) {
-    const runnablesEl = window.top?.document.querySelector('.runnables');
+    const runnablesEl = window.top?.document
+      .querySelector('iframe')
+      ?.contentDocument?.querySelector('.runnables');
     const runnablesStyleEl = window.top?.document.createElement('style');
     runnablesStyleEl.setAttribute('id', 'grepButtonsStyle');
     runnablesStyleEl.innerHTML = defaultStyles;
     runnablesEl?.appendChild(runnablesStyleEl);
   }
   let testsAndSuites;
-  if (Cypress.version >= '15.0.0') {
-    // TODO: Cypress v15 implemented a new suite naming convention that utilizes " > " separator between nested suites
-    // For now, only allowing tests to be selected for simplicity
-    testsAndSuites = window.top?.document.querySelectorAll('.test.runnable');
-  } else {
-    testsAndSuites = window.top?.document.querySelectorAll(
-      '.test.runnable, .suite.runnable'
-    );
-  }
+  testsAndSuites = window.top?.document
+    .querySelector('iframe')
+    ?.contentDocument?.querySelectorAll('.test.runnable');
   [...testsAndSuites].forEach((t) => {
     const header = t.querySelector('.collapsible-header');
     const title = header.querySelector('.runnable-title');
@@ -323,7 +331,9 @@ const addGrepButtons = () => {
     );
 
     // Add checkbox
-    const checkbox = window.top?.document.createElement('input');
+    const checkbox = window.top?.document
+      .querySelector('iframe')
+      ?.contentDocument?.createElement('input');
     checkbox.className = 'grep-test-checkbox';
     checkbox.type = 'checkbox';
     checkbox.value = testName;
@@ -369,18 +379,23 @@ export const addTags = () => {
 }
 `;
   if (Cypress.expose('specTags')) {
-    const hasStyles = window.top?.document.querySelector('#tagPillStyle');
+    const hasStyles = window.top?.document
+      .querySelector('iframe')
+      ?.contentDocument?.querySelector('#tagPillStyle');
 
     if (!hasStyles) {
       const runnablesStyleEl = window.top?.document.createElement('style');
-      const runnables = window.top?.document.querySelector('.runnables');
+      const runnables = window.top?.document
+        .querySelector('iframe')
+        ?.contentDocument?.querySelector('.runnables');
       runnablesStyleEl.setAttribute('id', 'tagPillStyle');
       runnablesStyleEl.innerHTML = defaultStyles;
       runnables?.appendChild(runnablesStyleEl);
     }
 
-    const testsAndSuites =
-      window.top?.document.querySelectorAll('.test.runnable');
+    const testsAndSuites = window.top?.document
+      .querySelector('iframe')
+      ?.contentDocument?.querySelectorAll('.test.runnable');
     [...testsAndSuites].forEach((t) => {
       const header = t.querySelector('.collapsible-header');
       const collapsibleHeaderText = header?.querySelector(
@@ -509,12 +524,17 @@ function renderTagPills(tags, container) {
 
     if (
       // if the grep test toggle is checked, do not show checkboxes on each runnable
-      window.top?.document.querySelectorAll('#grepTestToggle:checked')
+      window.top?.document
+        .querySelector('iframe')
+        ?.contentDocument?.querySelectorAll('#grepTestToggle:checked')
         .length === 0
     ) {
       // Handle selection toggle
       pill.addEventListener('click', () => {
-        window.top?.document.querySelector('#grepTestToggle').click();
+        window.top?.document
+          .querySelector('iframe')
+          ?.contentDocument?.querySelector('#grepTestToggle')
+          .click();
         Cypress.grep(undefined, tag);
       });
     }
@@ -526,7 +546,9 @@ function renderTagPills(tags, container) {
 Cypress.on('test:before:run', () => {
   if (
     // if the grep test toggle is checked, do not show checkboxes on each runnable
-    window.top?.document.querySelectorAll('#grepTestToggle:checked').length ===
+    window.top?.document
+      .querySelector('iframe')
+      ?.contentDocument?.querySelectorAll('#grepTestToggle:checked').length ===
     0
   ) {
     addGrepButtons();
@@ -540,7 +562,9 @@ MutationObserver = window.MutationObserver;
 var observer = new MutationObserver(function () {
   if (
     // if the grep test toggle is checked, do not show checkboxes on each runnable
-    window.top?.document.querySelectorAll('#grepTestToggle:checked').length ===
+    window.top?.document
+      .querySelector('iframe')
+      ?.contentDocument?.querySelectorAll('#grepTestToggle:checked').length ===
     0
   ) {
     // fired when a mutation occurs
