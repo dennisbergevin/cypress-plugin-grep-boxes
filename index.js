@@ -212,12 +212,12 @@ grepTestToggleElement?.addEventListener('change', (e) => {
     grepTestToggleTooltipElement.innerHTML = turnOngrepTestToggleDescription;
   } else {
     // for cypress-plugin-filter-runnables to clear search when grepTestToggle is unchecked
-    const searchInput = window.top?.document.querySelector(
-      '#test-suite-filter-search'
-    );
-    const clearBtn = window.top?.document.querySelector(
-      '#clear-test-suite-filter-search'
-    );
+    const searchInput = window.top?.document
+      .querySelector('iframe')
+      ?.contentDocument?.querySelector('#test-suite-filter-search');
+    const clearBtn = window.top?.document
+      .querySelector('iframe')
+      ?.contentDocument?.querySelector('#clear-test-suite-filter-search');
     if (searchInput != '') {
       clearBtn?.click();
     }
